@@ -55,9 +55,7 @@
     <Content Include="App.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Script.fsx" />
     <Compile Include="Logging.fs" />
-    <Compile Include="Startup.fs" />
     <Compile Include="Program.fs" />
     <Content Include="packages.config" />
   </ItemGroup>
