@@ -3,7 +3,6 @@
 open IdentityServer3.Core.Configuration
 open IdentityServer3.Core.Models
 open IdentityServer3.Core.Services
-open IdentityServer3.Core.Services.InMemory
 open Owin
 open Services
 open System.Collections.Generic
