@@ -27,7 +27,7 @@ let getUserAsync (userId : Guid) =
 
 let getUserByEmailAsync (email : string) = 
     Log.Information("Accessing DynamoDb for authUser with id {id}", email)
-    let scanResults = context.Scan<AuthUserEntity>(new ScanCondition("Email",ScanOperator.Equal,email)) |> Seq.toList
+    let scanResults = context.Scan<AuthUserEntity>(ScanCondition("Email",ScanOperator.Equal,email)) |> Seq.toList
     match scanResults with
     | [user] -> Some user
     | [] -> None

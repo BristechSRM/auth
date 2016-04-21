@@ -66,12 +66,12 @@ type AuthUserService() =
                         | Some user -> 
                             if user.TestPassword = password then
                                 let claims = getClaimsFromUser user
-                                new AuthenticateResult(user.Id.ToString(),user.Firstname + user.Surname, claims)
+                                AuthenticateResult(user.Id.ToString(),user.Firstname + user.Surname, claims)
                             else
-                                 new AuthenticateResult("There was error with the username or password")
-                        | None -> new AuthenticateResult("There was error with the username or password")
+                                 AuthenticateResult("There was error with the username or password")
+                        | None -> AuthenticateResult("There was error with the username or password")
                     with
-                        | :? ArgumentException -> new AuthenticateResult("Account is not allowed to login. See Authentication server logs.")
+                        | :? ArgumentException -> AuthenticateResult("Account is not allowed to login. See Authentication server logs.")
                 context.AuthenticateResult <- result
             } 
             |> Async.StartAsUnitTask

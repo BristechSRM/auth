@@ -9,27 +9,27 @@ open System.Collections.Generic
 
 type Startup() = 
     member __.Configuration(app : IAppBuilder) = 
-        let clientSecrets = [ new Secret("".Sha256()) ]
+        let clientSecrets = [ Secret("".Sha256()) ]
         let scopeNames = [ "api" ]
         
         let scopes = 
             [ StandardScopes.OpenId
               StandardScopes.Profile
-              new Scope(Name = "api") ]
+              Scope(Name = "api") ]
         
         let clients = 
-            [ new Client(ClientName = "Bristech SRM", 
+            [ Client(ClientName = "Bristech SRM", 
                 ClientId = "bristechsrm", 
                 Enabled = true, 
                 AccessTokenType = AccessTokenType.Reference, 
                 Flow = Flows.Implicit, 
-                ClientSecrets = new List<Secret>(clientSecrets), 
-                AllowedScopes = new List<string>(scopeNames)) ]
+                ClientSecrets = List<Secret>(clientSecrets), 
+                AllowedScopes = List<string>(scopeNames)) ]
 
         let factory = 
             let factory = IdentityServerServiceFactory().UseInMemoryClients(clients).UseInMemoryScopes(scopes)
-            factory.UserService <- new Registration<IUserService, AuthUserService>()
+            factory.UserService <- Registration<IUserService, AuthUserService>()
             factory
 
-        let options = new IdentityServerOptions(Factory = factory, RequireSsl = false)
+        let options = IdentityServerOptions(Factory = factory, RequireSsl = false)
         app.UseIdentityServer(options) |> ignore
