@@ -9,4 +9,6 @@ type AuthUserEntity =
     { Id : Guid
       Email : string
       Firstname : string
-      Surname : string }
+      Surname : string 
+      TestPassword : string}
+        

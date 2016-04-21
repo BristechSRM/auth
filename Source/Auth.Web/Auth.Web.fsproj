@@ -55,7 +55,9 @@
     <Content Include="App.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Compile Include="AsyncExtensions.fs" />
     <Compile Include="Entities.fs" />
+    <Compile Include="UserRepository.fs" />
     <Compile Include="AuthUserService.fs" />
     <Compile Include="Logging.fs" />
     <Compile Include="Startup.fs" />
@@ -80,6 +82,10 @@
     </Reference>
     <Reference Include="IdentityServer3">
       <HintPath>..\packages\IdentityServer3.2.5.0\lib\net45\IdentityServer3.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Owin">
