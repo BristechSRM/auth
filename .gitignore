@@ -137,7 +137,7 @@ publish/
 # Publish Web Output
 *.[Pp]ublish.xml
 *.azurePubxml
-# TODO: Comment the next line if you want to checkin your web deploy settings 
+# TODO: Comment the next line if you want to checkin your web deploy settings
 # but database connection strings (with potential passwords) will be unencrypted
 *.pubxml
 *.publishproj
@@ -234,3 +234,24 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+
+# Visual Studio FSharpLint
+Settings.FSharpLint
+
+# Vagrant
+.vagrant/
+
+# Npm debug logs
+front/npm-debug.log.*
+
+# Output dir (build)
+build/output/
+
+# Nuget stuff (can be install with build.sh)
+.nuget/
+
+# Ubuntu trash folder
+.Trash-*
+
+# This file needs to have the parameters required by the pipeline
+concourse/credentials.yml
