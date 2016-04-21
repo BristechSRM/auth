@@ -54,7 +54,7 @@ type AuthUserService() =
             }
             |> Async.StartAsUnitTask
 
-        member this.AuthenticateLocalAsync(context) = 
+        member __.AuthenticateLocalAsync(context) = 
             async {
                 Log.Information("Entering Local login authentication test method")
                 let email = context.UserName
@@ -76,7 +76,7 @@ type AuthUserService() =
             } 
             |> Async.StartAsUnitTask
                 
-        member this.PostAuthenticateAsync(context) = Task.Factory.StartNew(fun () -> ())
-        member this.PreAuthenticateAsync(context) = Task.Factory.StartNew(fun () -> ())
-        member this.AuthenticateExternalAsync(context) = failwith "Not implemented yet"
-        member this.SignOutAsync(context) = failwith "Not implemented yet"
+        member __.PostAuthenticateAsync(context) = Task.Factory.StartNew(fun () -> ())
+        member __.PreAuthenticateAsync(context) = Task.Factory.StartNew(fun () -> ())
+        member __.AuthenticateExternalAsync(context) = failwith "Not implemented yet"
+        member __.SignOutAsync(context) = failwith "Not implemented yet"
