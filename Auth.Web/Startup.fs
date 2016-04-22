@@ -1,11 +1,34 @@
 ﻿module Startup
 
+open System
+open System.Collections.Generic
+open System.Configuration
+
 open IdentityServer3.Core.Configuration
 open IdentityServer3.Core.Models
 open IdentityServer3.Core.Services
+
 open Owin
 open Services
-open System.Collections.Generic
+
+open Owin.Security.AesDataProtectorProvider
+open Microsoft.Owin.Security.Google
+
+
+let configureIdentityProviders (app: IAppBuilder) (signIsAsType: string) =
+  app.UseAesDataProtectorProvider()
+
+  let id = ConfigurationManager.AppSettings.Item("googleClientId")
+  let secret = ConfigurationManager.AppSettings.Item("googleClientSecret")
+
+  let google = 
+    new GoogleOAuth2AuthenticationOptions(
+      SignInAsAuthenticationType = signIsAsType,
+      ClientId = id,
+      ClientSecret = secret)
+
+  app.UseGoogleAuthentication(google) |> ignore
+
 
 type Startup() = 
     member __.Configuration(app : IAppBuilder) = 
@@ -31,5 +54,15 @@ type Startup() =
             factory.UserService <- Registration<IUserService, AuthUserService>()
             factory
 
-        let options = IdentityServerOptions(Factory = factory, RequireSsl = false)
+        let authenticationOptions = 
+            new AuthenticationOptions(
+                EnableLocalLogin = false,
+                IdentityProviders = Action<_,_>(configureIdentityProviders))
+
+        let options = 
+          new IdentityServerOptions(
+            Factory = factory, 
+            RequireSsl = false,
+            AuthenticationOptions = authenticationOptions)
+
         app.UseIdentityServer(options) |> ignore
