@@ -10,7 +10,7 @@ Target "Clean" (fun _ ->
 )
 
 Target "BuildApp" (fun _ ->
-    !! "Source/Auth.Web/**/*.fsproj"
+    !! "Auth.Web/**/*.fsproj"
     |> MSBuildRelease buildDir "Build"
     |> Log "AppBuld-Output: "
 )
