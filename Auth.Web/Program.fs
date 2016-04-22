@@ -11,7 +11,11 @@ let main _ =
     setupLogging()
 
     let baseAddress = "http://*:9003"
-    use server = WebApp.Start<Startup>(baseAddress)
+    use server =
+        try
+             WebApp.Start<Startup>(baseAddress)
+        with 
+            | :? System.Exception as ex -> raise ex
     Log.Information("Listening on {Address}", baseAddress)
     
     let waitIndefinitelyWithToken = 

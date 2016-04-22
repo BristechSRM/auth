@@ -75,8 +75,28 @@ type AuthUserService() =
                 context.AuthenticateResult <- result
             } 
             |> Async.StartAsUnitTask
+        
+        member __.AuthenticateExternalAsync(context) =
+            async {
+                // TODO: check context token against user store of whitelisted emails
+                let userClaims = 
+                    [ 
+                    new Claim(ClaimTypes.Name, "name");
+                    new Claim(ClaimTypes.Email, "foo@bar.com")
+                    ]
+     
+                let successResult = 
+                    new AuthenticateResult(
+                        "userid",
+                        "username", 
+                        userClaims, 
+                        context.ExternalIdentity.Provider, "external")
+
+                context.AuthenticateResult  <- successResult
+            }
+            |> Async.StartAsUnitTask
                 
         member __.PostAuthenticateAsync(context) = Task.Factory.StartNew(fun () -> ())
         member __.PreAuthenticateAsync(context) = Task.Factory.StartNew(fun () -> ())
-        member __.AuthenticateExternalAsync(context) = failwith "Not implemented yet"
-        member __.SignOutAsync(context) = failwith "Not implemented yet"
+        member __.SignOutAsync(context) = Task.Factory.StartNew(fun () -> ())
+        
