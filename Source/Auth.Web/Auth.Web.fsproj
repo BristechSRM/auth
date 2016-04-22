@@ -55,12 +55,24 @@
     <Content Include="App.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Compile Include="AsyncExtensions.fs" />
+    <Compile Include="Entities.fs" />
+    <Compile Include="UserRepository.fs" />
+    <Compile Include="AuthUserService.fs" />
     <Compile Include="Logging.fs" />
     <Compile Include="Startup.fs" />
     <Compile Include="Program.fs" />
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="AWSSDK.Core">
+      <HintPath>..\packages\AWSSDK.Core.3.1.5.3\lib\net45\AWSSDK.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="AWSSDK.DynamoDBv2">
+      <HintPath>..\packages\AWSSDK.DynamoDBv2.3.1.3.0\lib\net45\AWSSDK.DynamoDBv2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Bristech.Srm.HttpConfig">
       <HintPath>..\packages\Bristech.Srm.HttpConfig.0.1.1.0\lib\net45\Bristech.Srm.HttpConfig.dll</HintPath>
     </Reference>
@@ -70,6 +82,10 @@
     </Reference>
     <Reference Include="IdentityServer3">
       <HintPath>..\packages\IdentityServer3.2.5.0\lib\net45\IdentityServer3.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Owin">
