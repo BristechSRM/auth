@@ -81,8 +81,8 @@ type AuthUserService() =
                 // TODO: check context token against user store of whitelisted emails
                 let userClaims = 
                     [ 
-                    new Claim(ClaimTypes.Name, "name");
-                    new Claim(ClaimTypes.Email, "foo@bar.com")
+                        Claim(ClaimTypes.Name, "name");
+                        Claim(ClaimTypes.Email, "foo@bar.com")
                     ]
      
                 let successResult = 

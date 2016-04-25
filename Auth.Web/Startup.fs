@@ -71,7 +71,7 @@ type Startup() =
 
         let getEmbeddedCertificate() = 
             use stream = __.GetType().Assembly.GetManifestResourceStream("idsrv3test.pfx")            
-            let mutable buffer = Array.zeroCreate <| int(stream.Length)
+            let buffer = Array.zeroCreate <| int(stream.Length)
             stream.ReadAsync(buffer, 0, buffer.Length) 
             |> Async.AwaitTask
             |> Async.RunSynchronously
