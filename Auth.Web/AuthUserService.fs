@@ -15,11 +15,20 @@ open UserRepository
 type AuthUserService() = 
 
     let getClaimsFromUser (user : AuthUserEntity)= 
-        [ new Claim(Constants.ClaimTypes.Subject, user.Id.ToString())
-          new Claim(Constants.ClaimTypes.PreferredUserName, user.Email)
-          new Claim(Constants.ClaimTypes.Email, user.Email)
-          new Claim(Constants.ClaimTypes.GivenName, user.Firstname)
-          new Claim(Constants.ClaimTypes.FamilyName, user.Surname) ]
+        [ Claim(Constants.ClaimTypes.Subject, user.Id.ToString())
+          Claim(Constants.ClaimTypes.PreferredUserName, user.Email)
+          Claim(Constants.ClaimTypes.Email, user.Email)
+          Claim(Constants.ClaimTypes.GivenName, user.Firstname)
+          Claim(Constants.ClaimTypes.FamilyName, user.Surname) ]
+
+    let processExistingUser email provider = 
+        let userEntity = getUserByEmailAsync email
+        match userEntity with
+        | Some user -> 
+            let claims = getClaimsFromUser user
+            AuthenticateResult(user.Id.ToString(), user.Email,claims,provider,"external")
+        | None -> 
+            AuthenticateResult("Could not authenticate user")
 
     interface IUserService with        
         member __.GetProfileDataAsync(context) = 
@@ -53,50 +62,25 @@ type AuthUserService() =
                 else context.IsActive <- false
             }
             |> Async.StartAsUnitTask
-
-        member __.AuthenticateLocalAsync(context) = 
-            async {
-                Log.Information("Entering Local login authentication test method")
-                let email = context.UserName
-                let password = context.Password
-                let result = 
-                    try
-                        let userEntity = getUserByEmailAsync email
-                        match userEntity with 
-                        | Some user -> 
-                            if user.TestPassword = password then
-                                let claims = getClaimsFromUser user
-                                AuthenticateResult(user.Id.ToString(),user.Firstname + user.Surname, claims)
-                            else
-                                 AuthenticateResult("There was error with the username or password")
-                        | None -> AuthenticateResult("There was error with the username or password")
-                    with
-                        | :? ArgumentException -> AuthenticateResult("Account is not allowed to login. See Authentication server logs.")
-                context.AuthenticateResult <- result
-            } 
-            |> Async.StartAsUnitTask
         
         member __.AuthenticateExternalAsync(context) =
             async {
-                // TODO: check context token against user store of whitelisted emails
-                let userClaims = 
-                    [ 
-                        Claim(ClaimTypes.Name, "name");
-                        Claim(ClaimTypes.Email, "foo@bar.com")
-                    ]
-     
-                let successResult = 
-                    new AuthenticateResult(
-                        "userid",
-                        "username", 
-                        userClaims, 
-                        context.ExternalIdentity.Provider, "external")
-
-                context.AuthenticateResult  <- successResult
+                Log.Information("Entering external login authentication method")
+                let externalIdentity = context.ExternalIdentity
+                if not <| isNull externalIdentity then                    
+                    let emailClaim = context.ExternalIdentity.Claims |> Seq.tryFind(fun claim -> claim.Type = Constants.ClaimTypes.Email)
+                    match emailClaim with 
+                    | Some claim -> 
+                        context.AuthenticateResult <- processExistingUser claim.Value context.ExternalIdentity.Provider
+                    | None -> 
+                        context.AuthenticateResult <- AuthenticateResult("External User email is missing. Cannot perform login.")
+                else 
+                    raise (ArgumentNullException("ExternalIdentity"))
             }
             |> Async.StartAsUnitTask
                 
-        member __.PostAuthenticateAsync(context) = Task.Factory.StartNew(fun () -> ())
-        member __.PreAuthenticateAsync(context) = Task.Factory.StartNew(fun () -> ())
-        member __.SignOutAsync(context) = Task.Factory.StartNew(fun () -> ())
+        member __.AuthenticateLocalAsync(_) = Task.Factory.StartNew(fun () -> ())
+        member __.PostAuthenticateAsync(_) = Task.Factory.StartNew(fun () -> ())
+        member __.PreAuthenticateAsync(_) = Task.Factory.StartNew(fun () -> ())
+        member __.SignOutAsync(_) = Task.Factory.StartNew(fun () -> ())
         
