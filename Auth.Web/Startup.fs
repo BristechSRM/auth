@@ -17,7 +17,6 @@ open Owin.Security.AesDataProtectorProvider
 open Microsoft.Owin.Security.Google
 
 let configureIdentityProviders (app: IAppBuilder) (signIsAsType: string) =
-  app.UseAesDataProtectorProvider()
 
   let id = ConfigurationManager.AppSettings.Item("googleClientId")
   let secret = ConfigurationManager.AppSettings.Item("googleClientSecret")
@@ -86,4 +85,6 @@ type Startup() =
             RequireSsl = false,
             AuthenticationOptions = authenticationOptions)
 
+        app.UseAesDataProtectorProvider()
+            
         app.UseIdentityServer(options) |> ignore
