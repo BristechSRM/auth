@@ -10,7 +10,7 @@ open Serilog
 let main _ =
     setupLogging()
 
-    let baseAddress = "http://*:9003"
+    let baseAddress = "http://*:8080"
     use server = WebApp.Start<Startup>(baseAddress)
     Log.Information("Listening on {Address}", baseAddress)
 
