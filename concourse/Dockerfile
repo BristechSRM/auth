@@ -2,6 +2,6 @@ FROM mono
 
 COPY binaries/ service/
 
-EXPOSE 9003
+EXPOSE 8080 
 
 CMD ["mono", "service/Auth.Web.exe"]
