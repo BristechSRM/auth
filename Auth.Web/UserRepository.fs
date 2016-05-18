@@ -13,12 +13,12 @@ let client = new AmazonDynamoDBClient(RegionEndpoint.EUWest1)
 let context = new DynamoDBContext(client)
 
 let getUsers() = 
-    Log.Information("Accessing DynamoDb for AuthUsers")
+    Log.Debug("getUsers() - Accessing DynamoDb for AuthUsers")
     context.Scan<AuthUserEntity>()
 
 let getUserAsync (userId : Guid) = 
     async { 
-        Log.Information("Accessing DynamoDb for authUser with id {id}", userId)
+        Log.Debug("getUserAsync(id: {id}) - Accessing DynamoDb for authUser", userId)
         let cancelSource = new CancellationTokenSource()
         let! user = context.LoadAsync<AuthUserEntity>(userId, cancelSource.Token) |> Async.AwaitTask
         return if isNull <| box user then None
@@ -26,7 +26,7 @@ let getUserAsync (userId : Guid) =
     }
 
 let getUserByEmailAsync (email : string) = 
-    Log.Information("Accessing DynamoDb for authUser with id {id}", email)
+    Log.Debug("getUserByEmailAsync(email: {email}) - Accessing DynamoDb for authUser", email)
     let scanResults = context.Scan<AuthUserEntity>(ScanCondition("Email",ScanOperator.Equal,email)) |> Seq.toList
     match scanResults with
     | [user] -> Some user
