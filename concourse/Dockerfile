@@ -4,4 +4,4 @@ COPY binaries/ service/
 
 EXPOSE 8080 
 
-CMD ["mono", "service/Auth.Web.exe"]
+CMD ["mono", "service/Auth.exe"]

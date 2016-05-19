@@ -1,2 +1,2 @@
 cd build/output
-mono Auth.Web.exe
+mono Auth.exe
