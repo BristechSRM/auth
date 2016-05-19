@@ -37,7 +37,7 @@ type Startup() =
         let scopes = 
             [ StandardScopes.OpenId
               StandardScopes.Profile
-              Scope(Name = "api") ]
+              Scope(Name="api", DisplayName="SRM Administration API", Description="Bristech SRM Administration") ]
 
         let scopeNames =
             scopes |> Seq.map(fun s -> s.Name)

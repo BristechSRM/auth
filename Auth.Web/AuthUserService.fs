@@ -34,6 +34,7 @@ type AuthUserService() =
         member __.GetProfileDataAsync(context) = 
             async { 
                 let subject = context.Subject
+                Log.Debug("GetProfileDataAsync(subject.id: {id})", subject.GetSubjectId())
                 let requestedClaimTypes = context.RequestedClaimTypes
                 let success, subjectId = Guid.TryParse <| subject.GetSubjectId()
                 if success then 
@@ -53,6 +54,7 @@ type AuthUserService() =
         member __.IsActiveAsync(context) = 
             async {
                 let subject = context.Subject
+                Log.Debug("IsActiveAsync(subject.id: {id})", subject.GetSubjectId())
                 let success, subjectId = Guid.TryParse <| subject.GetSubjectId()
                 if success then 
                     let! userEntity = getUserAsync subjectId                    
@@ -65,8 +67,8 @@ type AuthUserService() =
         
         member __.AuthenticateExternalAsync(context) =
             async {
-                Log.Information("Entering external login authentication method")
                 let externalIdentity = context.ExternalIdentity
+                Log.Debug("AuthenticateExternalAsync(provider: {provider}, providerId: {providerId})", externalIdentity.Provider, externalIdentity.ProviderId)
                 if not <| isNull externalIdentity then                    
                     let emailClaim = context.ExternalIdentity.Claims |> Seq.tryFind(fun claim -> claim.Type = Constants.ClaimTypes.Email)
                     match emailClaim with 
