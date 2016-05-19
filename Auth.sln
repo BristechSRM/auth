@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Auth.Web", "Auth.Web\Auth.Web.fsproj", "{E1AC56D8-8629-430D-8B4F-4A77A2830512}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Auth", "Auth\Auth.fsproj", "{E1AC56D8-8629-430D-8B4F-4A77A2830512}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
