@@ -11,14 +11,14 @@ open IdentityServer3.Core.Services
 open Owin
 open Owin.Security.AesDataProtectorProvider
 open Microsoft.Owin.Security.Google
-open AppSettings
+open Config
 open Services
 
 
 let configureIdentityProviders (app: IAppBuilder) (signIsAsType: string) =
 
-  let id = AppSettings.getString "googleClientId"
-  let secret = AppSettings.getString "googleClientSecret"
+  let id = Config.getString "googleClientId"
+  let secret = Config.getString "googleClientSecret"
 
   let google = 
     new GoogleOAuth2AuthenticationOptions(
@@ -68,8 +68,8 @@ type Startup() =
                 IdentityProviders = Action<_,_>(configureIdentityProviders))
 
         let getEmbeddedCertificate() = 
-            let file = AppSettings.getString "certificateFile"
-            let pwd = AppSettings.getString "certificatePassword"
+            let file = Config.getString "certificateFile"
+            let pwd = Config.getString "certificatePassword"
             
             use stream = __.GetType().Assembly.GetManifestResourceStream(file)            
             let buffer = Array.zeroCreate <| int(stream.Length)

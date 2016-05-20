@@ -52,7 +52,7 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="AsyncExtensions.fs" />
-    <Compile Include="AppSettings.fs" />
+    <Compile Include="Config.fs" />
     <Compile Include="Entities.fs" />
     <Compile Include="UserRepository.fs" />
     <Compile Include="AuthUserService.fs" />
