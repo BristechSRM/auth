@@ -4,22 +4,21 @@ open System
 open System.Collections.Generic
 open System.Configuration
 open System.Security.Cryptography.X509Certificates
-
+open System.IO
 open IdentityServer3.Core.Configuration
 open IdentityServer3.Core.Models
 open IdentityServer3.Core.Services
-
-open System.IO
 open Owin
-open Services
-
 open Owin.Security.AesDataProtectorProvider
 open Microsoft.Owin.Security.Google
+open AppSettings
+open Services
+
 
 let configureIdentityProviders (app: IAppBuilder) (signIsAsType: string) =
 
-  let id = ConfigurationManager.AppSettings.Item("googleClientId")
-  let secret = ConfigurationManager.AppSettings.Item("googleClientSecret")
+  let id = AppSettings.getString "googleClientId"
+  let secret = AppSettings.getString "googleClientSecret"
 
   let google = 
     new GoogleOAuth2AuthenticationOptions(
@@ -69,13 +68,14 @@ type Startup() =
                 IdentityProviders = Action<_,_>(configureIdentityProviders))
 
         let getEmbeddedCertificate() = 
-            use stream = __.GetType().Assembly.GetManifestResourceStream("idsrv3test.pfx")            
+            let pwd = AppSettings.getString "certificatePassword"
+            use stream = __.GetType().Assembly.GetManifestResourceStream("BristechSRMsigning.pfx")            
             let buffer = Array.zeroCreate <| int(stream.Length)
             stream.ReadAsync(buffer, 0, buffer.Length) 
             |> Async.AwaitTask
             |> Async.RunSynchronously
             |> ignore
-            X509Certificate2(buffer, "idsrv3test")
+            X509Certificate2(buffer, pwd)
 
         let options = 
           new IdentityServerOptions(

@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="AsyncExtensions.fs" />
+    <Compile Include="AppSettings.fs" />
     <Compile Include="Entities.fs" />
     <Compile Include="UserRepository.fs" />
     <Compile Include="AuthUserService.fs" />
@@ -65,7 +66,7 @@
     <Content Include="secrets.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="idsrv3test.pfx">
+    <EmbeddedResource Include="BristechSRMsigning.pfx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
