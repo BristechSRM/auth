@@ -31,7 +31,7 @@ let configureIdentityProviders (app: IAppBuilder) (signIsAsType: string) =
 
 type Startup() = 
     member __.Configuration(app : IAppBuilder) = 
-        let clientSecrets = [ Secret("98A3BE08-7F60-47AA-A9EA-49DA00DC388F".Sha256()) ]
+        let clientSecrets = []
         
         let scopes = 
             [ StandardScopes.OpenId
