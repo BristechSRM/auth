@@ -68,13 +68,16 @@ type Startup() =
                 IdentityProviders = Action<_,_>(configureIdentityProviders))
 
         let getEmbeddedCertificate() = 
+            let file = AppSettings.getString "certificateFile"
             let pwd = AppSettings.getString "certificatePassword"
-            use stream = __.GetType().Assembly.GetManifestResourceStream("BristechSRMsigning.pfx")            
+            
+            use stream = __.GetType().Assembly.GetManifestResourceStream(file)            
             let buffer = Array.zeroCreate <| int(stream.Length)
             stream.ReadAsync(buffer, 0, buffer.Length) 
             |> Async.AwaitTask
             |> Async.RunSynchronously
             |> ignore
+
             X509Certificate2(buffer, pwd)
 
         let options = 
