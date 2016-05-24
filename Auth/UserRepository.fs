@@ -9,7 +9,7 @@ open Amazon.DynamoDBv2.DataModel
 open Amazon.DynamoDBv2.DocumentModel
 open Entities
 
-let client = new AmazonDynamoDBClient(RegionEndpoint.EUWest1)
+let client = new AmazonDynamoDBClient(DynamoDbConfig.config)
 let context = new DynamoDBContext(client)
 
 let getUsers() = 
