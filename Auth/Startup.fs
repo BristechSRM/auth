@@ -32,7 +32,8 @@ let configureIdentityProviders (app: IAppBuilder) (signIsAsType: string) =
 type Startup() = 
     member __.Configuration(app : IAppBuilder) = 
 
-        let isDev = Config.getString "Environment" = "development"
+        let frontendUrl = Config.getString "FrontEndUrl"
+        let signedInUrl = frontendUrl + "/signed-in"
 
         let clientSecrets = []
         
@@ -41,9 +42,9 @@ type Startup() =
         let scopeNames =
             scopes |> Seq.map(fun s -> s.Name)
         
-        let clientCorsOrigins = if isDev then [ "http://localhost:8080" ] else [ "http://srm.bris.tech" ]
-        let clientRedirectUris = if isDev then [ "http://localhost:8080/signed-in" ] else [ "http://srm.bris.tech/signed-in" ]
-        let clientPostLogoutUris = if isDev then [ "http://localhost:8080" ] else [ "http://srm.bris.tech" ]
+        let clientCorsOrigins = [ frontendUrl ]
+        let clientRedirectUris = [ signedInUrl ]
+        let clientPostLogoutUris = [ frontendUrl ]
 
         let clients = 
             [ Client(ClientName = "Bristech SRM", 
