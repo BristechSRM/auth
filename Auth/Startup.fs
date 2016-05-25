@@ -89,6 +89,6 @@ type Startup() =
             RequireSsl = false,
             AuthenticationOptions = authenticationOptions)
 
-        app.UseAesDataProtectorProvider("key")
+        app.UseAesDataProtectorProvider()
             
         app.UseIdentityServer(options) |> ignore
