@@ -255,5 +255,6 @@ build/output/
 # This file needs to have the parameters required by the pipeline
 concourse/credentials.yml
 
-# TODO
-# secrets.config
+# Secrets out
+*.secrets.config
+*.pfx
