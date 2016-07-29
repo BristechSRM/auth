@@ -1,9 +1,23 @@
 auth
 ===
 
+Auth needs some secret information that is not checked in.  This consists of secrets.config, and a certificate file containing a private key.
+
+Secrets file
+---
+The secrets.config file should contain:
+```
+<appSettings>
+    <add key="googleClientId" value="" />
+    <add key="googleClientSecret" value="" />
+    <add key="certificateFile" value="" />
+    <add key="certificatePassword" value="" />
+</appSettings>
+```
+
+
 Certificate file
 ---
-
 You can generate a self-signed certificate for use by Auth.
 
 On Windows Command Prompt use makecert:
