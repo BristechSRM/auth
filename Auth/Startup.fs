@@ -72,7 +72,7 @@ type Startup() =
             let file = Config.getString "certificateFile"
             let pwd = Config.getString "certificatePassword"
             
-            use stream = __.GetType().Assembly.GetManifestResourceStream(file)            
+            use stream = new FileStream(file, FileMode.Open)
             let buffer = Array.zeroCreate <| int(stream.Length)
             stream.ReadAsync(buffer, 0, buffer.Length) 
             |> Async.AwaitTask
