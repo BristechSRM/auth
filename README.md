@@ -55,3 +55,11 @@ It will prompt for the password of the pvk file.
 
 More details here:
 https://www.jayway.com/2014/09/03/creating-self-signed-certificates-with-makecert-exe-for-development/
+
+## Running on linux.
+To run easily on linux for local development you need to
+
+    1. Edit the app.config file if required.
+    2. Place the secrets.config file mentioned in the section above at `../configs/Auth.secrets.config` (a folder called configs at the same level as the top level auth repository folder)
+    3. Place the credentials file in the same location e.g `../configs/TrustMe.pfx`
+    4. Run `./localBuildRun.sh`
