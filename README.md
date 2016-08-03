@@ -8,6 +8,8 @@ Secrets file
 The secrets.config file should contain:
 ```
 <appSettings>
+    <add key="AWSAccessKey" value="" />
+    <add key="AWSSecretKey" value="" />
     <add key="googleClientId" value="" />
     <add key="googleClientSecret" value="" />
     <add key="certificateFile" value="" />
@@ -25,7 +27,7 @@ N.B.
  "^" is the DOS line continuation character, just for clarity
  CN= is "Common Name".  Just pick one.
  -r is for self signed.
-
+```
 > makecert.exe ^
 -n "CN=BertAndEthel" ^
 -r ^
@@ -35,17 +37,20 @@ N.B.
 -cy authority ^
 -sv BertAndEthel.pvk ^
 BertAndEthel.cer
-
+```
 it will prompt twice to set a password for the file.
 
 
 You need it in pfx format, which you can create with pvk2pfx.
+```
 > pvk2pfx.exe ^
 -pvk BertAndEthel.pvk ^
 -spc BertAndEthel.cer ^
 -pfx BertAndEthel.pfx
+-po  pfxfilepassword
+```
 
-it will prompt for the file password.
+It will prompt for the password of the pvk file.
 
 
 More details here:
