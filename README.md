@@ -8,6 +8,8 @@ Secrets file
 The secrets.config file should contain:
 ```
 <appSettings>
+    <add key="AWSAccessKey" value="" />
+    <add key="AWSSecretKey" value="" />
     <add key="googleClientId" value="" />
     <add key="googleClientSecret" value="" />
     <add key="certificateFile" value="" />
