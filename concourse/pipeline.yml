@@ -39,8 +39,7 @@ resources:
   source:
     serviceName: auth
     executableName: Auth
-    nodeName: {{authNode}}
-    portNumber: 8080
+    portNumber: 9003
     repository: bristechsrm/auth
-    swarmMasterIp: {{swarmMasterIp}}
-    network: bridge
+    swarmMaster: {{swarmMaster}}
+    network: srm-swarm
