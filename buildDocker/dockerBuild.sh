@@ -21,4 +21,3 @@ cd $DIR/context/
 docker build -t auth . 
 IMAGEID=$(docker images auth:latest -q)
 docker tag $IMAGEID bristechsrm/auth:latest
-
